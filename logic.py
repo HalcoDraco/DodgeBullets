@@ -1,7 +1,7 @@
 from consts import *
 from vec import Vec
 from line3d import Line3d
-from math import pi, radians as rad
+from math import pi, radians as rad, sqrt
 
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
@@ -119,8 +119,24 @@ def tryMove(player, dir, bList):
 
     return minDir, False
 
-def shootPlayer(player, targetId, pList, bullets, tickCounter):
-    target = pList[targetId]
-    dir = Vec(target.pos.x - player.pos.x, target.pos.y - player.pos.y)
-    player.shoot(dir, bullets, tickCounter)
+targetPosition = Vec(0, 0)
+previousTargetPosition = Vec(0, 0)
 
+def shootPlayer(player, targetId, pList, bullets, tickCounter):
+    global targetPosition, previousTargetPosition
+
+    target = pList[targetId]
+    targetPosition = target.pos
+
+    targetDirection = (targetPosition - previousTargetPosition)
+    targetDirection.normalize()
+
+    directionToTarget = (targetPosition - player.pos)
+    directionToTarget.normalize() 
+    directionToTarget = directionToTarget * (sqrt((bullet_speed)**2 + ((1/16) * bullet_speed)))
+
+    direction = directionToTarget + targetDirection
+
+    player.shoot(direction, bullets, tickCounter)
+
+    previousTargetPosition = targetPosition
