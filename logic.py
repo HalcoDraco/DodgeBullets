@@ -84,8 +84,6 @@ def tryMove(player, dir):
         result = tryAngle(player, dir, angle, costs, lines)
         if result != None:
             return result
-
-    print("Hit detected")
     
     minCost, minDir = costs[0][0], costs[0][1]
     for c, d in costs:

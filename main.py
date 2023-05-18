@@ -14,7 +14,7 @@ player4 = Player(800, 200)
 player5 = Player(200, 500)
 player6 = Player(800, 500)
 
-player0 = Player(500, player_radius + 1)
+player0 = Player(500, 500)
 
 context.players[player0.id()] = player0
 context.players[player1.id()] = player1
@@ -40,8 +40,8 @@ def update():
     for player in context.players.values():
         player.move(player_speed)
         if player.id() == id_main_player:
-            #dirs[(int(context.tickCounter/40)%8)]
-            player.set_direction(tryMove(player, Vec(0, 1)))
+
+            player.set_direction(tryMove(player, dirs[(int(context.tickCounter/40)%8)]))
         else:
             shootPlayer(player, id_main_player)
     
@@ -54,15 +54,13 @@ def update():
     for id in delids:
         del (context.bullets)[id]
 
-"""
-        global collisions
-        #check for collisions
-        for bullet in context.bullets.values():   
-            player = context.players[id_main_player]
-            if player.pos.distance(bullet.pos) < player_radius + bullet_radius:
-                collisions += 1
-                print("Collisions: " + str(collisions))
-"""
+    global collisions
+    #check for collisions
+    for bullet in context.bullets.values():   
+        player = context.players[id_main_player]
+        if player.pos().distance(bullet.pos()) < player_radius + bullet_radius:
+            collisions += 1
+            print("Collisions: " + str(collisions))
 
     
 def draw():
