@@ -110,11 +110,12 @@ def shootPlayer(player, targetId):
     target = context.players[targetId]
 
     targetDirection = target.dir().normalized()
+    targetDirection = targetDirection * player_speed #gives correct norm to match player speed
 
     directionToTarget = player.direction_to(target).normalized()
-    directionToTarget = directionToTarget * (sqrt((bullet_speed)**2 + ((1/16) * bullet_speed))) 
+    directionToTarget = directionToTarget * sqrt(bullet_speed**2 - player_speed**2) 
 
-    direction = directionToTarget + targetDirection
+    direction =  directionToTarget + targetDirection
 
     player.shoot(direction)
 
