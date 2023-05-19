@@ -14,7 +14,7 @@ shootCooldown = 1400/player_speed # ticks
 avoidance_distance = 4 # px of distance between player and bullet
 
 circular_step = 3 # number of angles to use when trying to find a free spot
-playerViewRadius = 400 # px
+playerViewRadius = 450 # px
 
 from context import Context
 context = Context()
